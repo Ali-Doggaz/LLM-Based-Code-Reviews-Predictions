@@ -866,7 +866,6 @@ By addressing these specific challenges and limitations, and focusing on future 
 
 ## 6. [Conclusion](#6-conclusion)
 
-6  Conclusion
 1. <a name="_page45_x69.87_y18.83"></a><a name="_page45_x70.87_y101.43"></a>Summary<a name="_page45_x70.87_y125.22"></a> of Findings
 
 Our project aimed to integrate AI into the code review process to enhance efficiencyand accuracy. We implemented a comprehensive architecture leveraging Azure services such as Azure Functions, Azure Data Factory, Azure Synapse Analytics, and Azure Databricks. Throughout the project, we managed to create a robust system that performs senti- ment analysis on code reviews, processes data effectively, and ensures secure storage and management of the information. The iterative Agile methodology facilitated continuous improvement and adaptation to user feedback, ensuring that the final solution meets the needs of developers and contributors.
