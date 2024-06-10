@@ -1,122 +1,97 @@
-﻿![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.001.png)
+# Project Report - National Institute of Applied Science and Technology
 
-<a name="_page0_x69.87_y18.83"></a>National Institute of Applied Science and
+**Please note:** For the best viewing experience, consider viewing the PDF version of this report, "PFA_REPORT.pdf", available in this repository.
 
-Technology
+### Project Overview
+This project introduces a novel approach to automated code reviews using AI, specifically leveraging a custom-built Generative Pre-trained Transformer (GPT) agent. The report details the business understanding, technical architecture, implementation details, and challenges encountered during the project's development.
 
-End of Year Project Report![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.002.png)
-
-[LLM-Based](#_page4_x70.87_y356.57) Code Reviews Predictions![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.003.png)
-
-Students :
-
-Supervisor : Tasnim Dakhli
-
-Hajer Taktak Ali![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.004.png) Doggaz
-
-Examiner : Achref Saidi
-
-Asma Ben Hassouna Mehdi Ghorbel
-
-![ref1] Contents![ref2]
-
-<a name="_page1_x70.87_y91.47"></a>Contents
-
-[List of Figures](#_page1_x70.87_y91.47) 3 [List of Acronyms](#_page3_x70.87_y91.47) 4 [1 Introduction](#_page6_x70.87_y101.43) 6
-
-[2 Business Understanding](#_page7_x70.87_y101.43) 7
-
-1. Project Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
-1. The Host Institution . . . . . . . . . . . . . . . . . . . . . . . . . . 7
-1. Project Context . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
-1. Problem Statement . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
-1. Solution . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
-2. Project Requirements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
-1. Functional Requirements: . . . . . . . . . . . . . . . . . . . . . . . 8
-1. Non functional requirements: . . . . . . . . . . . . . . . . . . . . . 8
-3. Project Methodology . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
-
-[3 Architecture Overview](#_page10_x70.87_y101.43) 10
-
-1. High-Level Architecture . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
-1. Architecture V0.0.1 . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
-1. Architecture V0.0.2 . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
-1. Architecture V1.0.0 . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
-1. Architecture V1.0.1 . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
-2. Components Description . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
-1. GPT Agent . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
-1. Cloud Function . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
-1. Sentiment Analyzer . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
-1. Data Lake . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
-1. Data Factory . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
-1. Data Warehouse . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
-1. Model Fine-tuning . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
-1. Model Versioning and Tracking . . . . . . . . . . . . . . . . . . . . 18
-
-[4 Implementation Details](#_page18_x70.87_y695.65) 18
-
-1. ChatGPT Agent Integration . . . . . . . . . . . . . . . . . . . . . . . . . . 19
-1. Why ChatGPT Agents? . . . . . . . . . . . . . . . . . . . . . . . . 19
-1. Implementation details . . . . . . . . . . . . . . . . . . . . . . . . . 19
-2. Cloud Function - Azure Cloud Function[4] . . . . . . . . . . . . . . . . . . 23
-1. Why Azure Cloud Function? . . . . . . . . . . . . . . . . . . . . . 23
-1. Implementation details . . . . . . . . . . . . . . . . . . . . . . . . . 23
-3. Sentiment Analyzer: Azure Text Analytics[5] . . . . . . . . . . . . . . . . . 24
-1. What is Azure Text Analytics . . . . . . . . . . . . . . . . . . . . . 24
-1. Why Azure Text Analytics? . . . . . . . . . . . . . . . . . . . . . . 24
-1. Implementation details . . . . . . . . . . . . . . . . . . . . . . . . . 24
-4. Data Lake: Azure Table Storage[6] . . . . . . . . . . . . . . . . . . . . . . 27
-1. What is Azure Table Storage . . . . . . . . . . . . . . . . . . . . . 27
-2. Why<a name="_page2_x69.87_y18.83"></a> Azure Table Storage? . . . . . . . . . . . . . . . . . . . . . . . 27
-2. Implementation details . . . . . . . . . . . . . . . . . . . . . . . . . 28
-5. Azure Data Factory . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
-1. What is Azure Data Factory? . . . . . . . . . . . . . . . . . . . . . 30
-1. Why Azure Data Factory? . . . . . . . . . . . . . . . . . . . . . . . 30
-6. Data Warehouse Setup : Azure Synapse Analytics . . . . . . . . . . . . . . 30
-1. What is Azure Synapse Analytics? . . . . . . . . . . . . . . . . . . 30
-1. Why Azure Synapse Analytics? . . . . . . . . . . . . . . . . . . . . 31
-1. Implementation Details . . . . . . . . . . . . . . . . . . . . . . . . . 31
-7. Model fine-tuning with Azure Databricks . . . . . . . . . . . . . . . . . . . 33
-1. What is Azure Databricks? . . . . . . . . . . . . . . . . . . . . . . 33
-1. Why Azure Databricks? . . . . . . . . . . . . . . . . . . . . . . . . 33
-1. Implementation details . . . . . . . . . . . . . . . . . . . . . . . . . 33
-8. Model Versioning and Tracking with MLflow . . . . . . . . . . . . . . . . 37
-1. What is MLFlow? . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
-1. Why MLFlow? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
-1. Implementation details . . . . . . . . . . . . . . . . . . . . . . . . . 38
-9. Azure Key Vault[12] and Azure Monitoring[13] . . . . . . . . . . . . . . . . 40
-1. What are Azure Key Vault and Azure Monitoring? . . . . . . . . . 40
-1. Why Azure Key Vault and Azure Monitoring? . . . . . . . . . . . 40
-
-[5 Challenges and Limitations](#_page42_x70.87_y101.43) 42
-
-1. Technical Challenges . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
-1. Integration with Existing Systems . . . . . . . . . . . . . . . . . . . 42
-1. Scalability Issues . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
-1. Model Training and Updating . . . . . . . . . . . . . . . . . . . . . 42
-1. Security and Compliance . . . . . . . . . . . . . . . . . . . . . . . . 42
-2. Limitations of the Current Solution . . . . . . . . . . . . . . . . . . . . . . 43
-1. Git API Rate Limits . . . . . . . . . . . . . . . . . . . . . . . . . . 43
-1. Sentiment Analysis Accuracy . . . . . . . . . . . . . . . . . . . . . 43
-1. ETL Pipeline Limitations . . . . . . . . . . . . . . . . . . . . . . . 43
-1. Limited Training Data . . . . . . . . . . . . . . . . . . . . . . . . . 43
-3. Future Work and Improvements . . . . . . . . . . . . . . . . . . . . . . . . 43
-1. Enhanced Integration with Azure Machine Learning . . . . . . . . . 43
-1. Improved Scalability Solutions . . . . . . . . . . . . . . . . . . . . . 44
-1. Advanced Security Measures . . . . . . . . . . . . . . . . . . . . . . 44
-1. User Feedback Integration . . . . . . . . . . . . . . . . . . . . . . . 44
-1. Expanding Beyond Azure . . . . . . . . . . . . . . . . . . . . . . . 44
-
-[6 Conclusion](#_page45_x70.87_y101.43) 45
-
-1. Summary of Findings . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 45
-1. Project Outcomes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 45
-1. Final Thoughts . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 45
-
-[Bibliography](#_page46_x70.87_y91.47) 46
-
+## Table of Contents
+- [List of Figures](#list-of-figures)
+- [List of Acronyms](#list-of-acronyms)
+- [1. Introduction](#1-introduction)
+- [2. Business Understanding](#2-business-understanding)
+  - Project Overview
+  - The Host Institution
+  - Project Context
+  - Problem Statement
+  - Solution
+  - Project Requirements
+    - Functional Requirements
+    - Non-functional requirements
+  - Project Methodology
+- [3. Architecture Overview](#3-architecture-overview)
+  - High-Level Architecture
+  - Architecture V0.0.1
+  - Architecture V0.0.2
+  - Architecture V1.0.0
+  - Architecture V1.0.1
+  - Components Description
+    - GPT Agent
+    - Cloud Function
+    - Sentiment Analyzer
+    - Data Lake
+    - Data Factory
+    - Data Warehouse
+    - Model Fine-tuning
+    - Model Versioning and Tracking
+- [4. Implementation Details](#4-implementation-details)
+  - ChatGPT Agent Integration
+    - Why ChatGPT Agents?
+    - Implementation details
+  - Cloud Function - Azure Cloud Function
+    - Why Azure Cloud Function?
+    - Implementation details
+  - Sentiment Analyzer: Azure Text Analytics
+    - What is Azure Text Analytics
+    - Why Azure Text Analytics?
+    - Implementation details
+  - Data Lake: Azure Table Storage
+    - What is Azure Table Storage
+    - Why Azure Table Storage?
+    - Implementation details
+  - Azure Data Factory
+    - What is Azure Data Factory?
+    - Why Azure Data Factory?
+  - Data Warehouse Setup: Azure Synapse Analytics
+    - What is Azure Synapse Analytics?
+    - Why Azure Synapse Analytics?
+    - Implementation Details
+  - Model fine-tuning with Azure Databricks
+    - What is Azure Databricks?
+    - Why Azure Databricks?
+    - Implementation details
+  - Model Versioning and Tracking with MLflow
+    - What is MLFlow?
+    - Why MLFlow?
+    - Implementation details
+  - Azure Key Vault and Azure Monitoring
+    - What are Azure Key Vault and Azure Monitoring?
+    - Why Azure Key Vault and Azure Monitoring?
+- [5. Challenges and Limitations](#5-challenges-and-limitations)
+  - Technical Challenges
+    - Integration with Existing Systems
+    - Scalability Issues
+    - Model Training and Updating
+    - Security and Compliance
+  - Limitations of the Current Solution
+    - Git API Rate Limits
+    - Sentiment Analysis Accuracy
+    - ETL Pipeline Limitations
+    - Limited Training Data
+  - Future Work and Improvements
+    - Enhanced Integration with Azure Machine Learning
+    - Improved Scalability Solutions
+    - Advanced Security Measures
+    - User Feedback Integration
+    - Expanding Beyond Azure
+- [6. Conclusion](#6-conclusion)
+  - Summary of Findings
+  - Project Outcomes
+  - Final Thoughts
+- [7. Bibliography](#7-bibliography)
+  
 3
-![ref1] List of Figures![ref2]
+## List of Figures
 
 <a name="_page3_x70.87_y91.47"></a>List<a name="_page3_x69.87_y18.83"></a> of Figures
 
@@ -148,9 +123,7 @@ Asma Ben Hassouna Mehdi Ghorbel
 1. The evaluation loss for various model training runs over a series of steps. . 39
 
 4
-![ref1] Acronyms![ref2]
-
-Acronyms
+## List of Acronyms
 
 <a name="_page4_x70.87_y131.42"></a>ADF Azure Data Factory. 30–32
 
@@ -185,9 +158,7 @@ Abstract
 Efficient code reviews are critical for maintaining high-quality software, but the growing complexity and volume of code changes make them increasingly time- consuming. This project introduces a novel Generative Pre-trained Transformer (GPT) agent specifically designed for code review. Integrated with ChatGPT, our agent analyzes pull requests, understands code changes, and leverages historical data to predict potential code reviews. A continuous learning pipeline ensures the model stays up-to-date and adapts to evolving codebases. By providing developers with accurate and timely predictions, our approach has the potential to significantly streamline the code review process, reducing merge times and improving overall development workflow.
 
 
-![ref1] 7 Introduction![ref2]
-
-1  Introduction
+## [1 Introduction](#introduction)
 
 <a name="_page6_x69.87_y18.83"></a><a name="_page6_x70.87_y101.43"></a>The field of software development is continuously evolving, with developers constantly seeking ways to streamline their workflows and improve code quality. One critical aspect of this process is the review of pull requests on GitHub repositories, which can be time- consuming and require considerable effort. As fourth-year Software Engineering students at INSAT, we’ve taken on the challenge of improving this process using artificial intelli- gence (AI). This project leverages AI to enhance the code review process by developing a custom GPT (Generative Pre-trained Transformer) agent. In this report, we will delve into various aspects of the project, from understanding the business context to the architecture and technical implementation details, and discussing the challenges encountered along the way. The structure of the report is as follows:
 
@@ -196,10 +167,7 @@ Efficient code reviews are critical for maintaining high-quality software, but t
 - Implementation Details: This chapter focuses on the practical aspects of building and integrating the system. It covers the integration of the ChatGPT agent, the process of sentiment analysis, methods for data collection and storage, and details on data processing. It also describes the setup of the data warehouse, the process of model training, and the monitoring and version management mechanisms.
 - Challenges and Limitations: This chapter addresses the difficultiesencountered during the project and the inherent limitations of the current solution. It discusses technical challenges, the constraints of the implemented system, and provides sug- gestions for future improvements and potential enhancements to overcome these limitations.
 
-7
-![ref1] 10 Business Understanding![ref2]
-
-2  Business<a name="_page7_x69.87_y18.83"></a><a name="_page7_x70.87_y101.43"></a> Understanding Introduction
+## [2 Business Understanding](#business-understanding)
 
 In this chapter, we will provide an overview of the project’s problematic, context and our proposed solution plan as well as our chosen development methodology.
 
@@ -248,10 +216,8 @@ Conclusion
 
 In this introductory chapter, we have defined the objectives of our project and identi- fied the requirements and possible solutions. We have set a clear plan for what we aim to achieve. Now, we will move on to the next chapter, which focuses on the architecture of our project.
 
-10
-![ref1] 18 Architecture Overview![ref2]
 
-3  Architecture<a name="_page10_x69.87_y18.83"></a><a name="_page10_x70.87_y101.43"></a> Overview Introduction
+## 3. [Architecture Overview](#architecture-overview)
 
 In this chapter, we will provide a comprehensive overview of the architecture that under- pins our project. We will start by presenting the high-level architecture, which outlines the overall structure and major components involved. Following this, we will delve into detailed descriptions of each component.
 
@@ -265,7 +231,7 @@ In our initial architecture, we aimed to achieve a proof-of-concept by creating 
 
 This simple architecture relies on a GPT agent that communicates with our cloud function through HTTP requests. The sentiment analysis is performed by using an NLP service on Azure called Text Analytics (available in Azure Cognitive Services), also triggered by HTTP requests.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.007.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.007.png)
 
 <a name="_page10_x70.87_y476.29"></a>Figure 3.1: Architecture V0.0.1
 
@@ -275,7 +241,7 @@ After validating our v0.0.1 architecture, we noticed a need for a crucial featur
 
 In our previous architecture, the users were obliged to provide their code changes in their prompt to the GPT agent. We preferred to allow the user to simply mention their PR’s number in the project, and then added the code changes retrieval feature to our cloud function. This change doesn’t affect the general architecture of the system. Instead, it modifies the behavior of the cloud function and its interaction with the Git API.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.008.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.008.png)
 
 <a name="_page11_x70.87_y229.07"></a>Figure 3.2: Architecture V0.0.2
 
@@ -288,7 +254,7 @@ This caused a major architectural change:
 - Storage Solutions : As we now needed to store the reviews somewhere, we’ve de- cided to follow the data lake/data warehouse architecture, which consists in storing our raw data in a flexible, scalable storage solution (Azure Table Storage), contin- uously process and clean that data using Azure Data Factory, and finally store the post-processed data in a structured storage solution that offers advanced analytics tools, i.e: our data warehouse (Azure Synapase Analytics).
 - Continuous [ML training](#_page4_x70.87_y385.96) : Once our clean data stored, we needed to create a pipeline that periodically uses the newly ingested data to train a new LLM. For this tasks, we leverage the easy integration between Azure Synapse (Data Warehouse) and Azure Databricks to ingest the new data every 2 weeks. We then trained the new<a name="_page12_x69.87_y18.83"></a> LLM in Azure Databricks and aimed to store the produced artifact in Azure Machine Learning to ensure proper versioning and model evaluation.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.009.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.009.png)
 
 <a name="_page12_x70.87_y147.84"></a>Figure 3.3: Architecture V1.0.0
 
@@ -296,7 +262,7 @@ This caused a major architectural change:
 
 During the implementation phase of the previous architecture (V1.0.0), we encountered a technical problem that prevented us from linking Azure Databricks to Azure Machine Learning. The latter required a "Service Principal Authentication" profile, which to be created, needed us to have organizational-level permissions to our organization. As we worked on this project using our university’s emails, we would’ve had to contact the university to solve this issue. We preferred to slightly adapt our architecture and replaced Azure Machine Learning with ML Flow, to keep track of our experiments, along with each training’s results and performances.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.010.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.010.png)
 
 <a name="_page13_x70.87_y94.21"></a>Figure 3.4: Architecture V1.0.1
 
@@ -419,9 +385,6 @@ Key Features
 - Feature Engineering : Modifying input features or introducing new ones to better represent the data and improve model performance.
 - Transfer Learning : Leveraging knowledge from pre-trained models and transfer- ring it to the target task, reducing the need for extensive training on limited data.
 
-18
-![ref1] 42 Implementation Details![ref2]
-
 Usage in Our Project
 
 In our project, model fine-tuning is carried out using Azure Databricks, which integrates seamlessly with other Azure services for a streamlined workflow.
@@ -445,7 +408,8 @@ In our project, MLflow is utilized for effective model versioning and tracking, 
 
 - Creating Versions : Each time the model is trained or fine-tuned, a new version is created in MLflow. This includes incremental changes from continuous learning or scheduled retraining sessions.
 - Tracking : All experiments, including training runs, hyperparameters, and evalua- tion metrics, are logged in MLflow, allowing for comprehensive tracking and com- parison of different model versions to understand the impact of changes.
-4  Implementation<a name="_page18_x70.87_y695.65"></a> Details Introduction
+
+## 4. [Implementation Details](#implementation-details)
 
 This chapter delves into the practical aspects of building and integrating the architecture of our project. It outlines the integration of our Azure Cloud Function with the ChatGPT agent,<a name="_page19_x69.87_y18.83"></a> the data enriching of raw reviews using sentiment analysis techniques, methods used for data collection and storage, and details on how data is leveraged in the context of our continuous ML training pipeline.
 
@@ -457,7 +421,7 @@ In this section, we will explain our choice of using chatGPT agents and more spe
 
 GPT-4 is one of the best-performing LLMs in various tasks, especially coding. However, What distinguishes it from its competitors is its "extension" market, i.e: GPT Agents. As discussed in the previous sections, these allows developers to leverage the LLMs ca- pabilities for specific use-cases such as open-source projects’ code reviews. This feature made it a relatively simple choice for us to opt for GPT Agents.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.011.jpeg)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.011.jpeg)
 
 <a name="_page19_x70.87_y334.37"></a>Figure 4.1: GPT-4 performance comparison with other LLMs
 
@@ -471,7 +435,7 @@ Figure 4.1 shows the comparative performance of GPT-4 against other leading larg
 - Properly format the outputted reviews in a similar way to how they would be structured under a GitHub pull request.
 - Leveraging [GPT A](#_page4_x70.87_y268.40)ctions : In order to retrieve the user’s pull request data as well as the previous reviews posted on the project, our GPT agent uses a custom action. It is provided with an API key to ensure protected transmission of data between the OpenAI server and the Azure Cloud Function.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.012.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.012.png)
 
 <a name="_page20_x70.87_y276.86"></a>Figure 4.2: GPT Agent instructions
 
@@ -479,7 +443,7 @@ Figure 4.2 displays the various instructions given to the GPT agent to fine-tune
 
 specific use case.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.013.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.013.png)
 
 <a name="_page21_x70.87_y94.21"></a>Figure 4.3: GPT Action
 
@@ -489,13 +453,13 @@ OpenApi schema for the endpoint’s call and response format.
 
 
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.014.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.014.png)
 
 <a name="_page21_x69.87_y18.83"></a><a name="_page22_x70.87_y94.21"></a>Figure 4.4: Sample Discussion with GPT Agent, actions call
 
 Figure 4.4 displays an example of a conversation starter with our GPT agent. We can notice the call of the GPT Action and the start of the response received from the cloud function, which was too long to include entirely in the screenshot
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.015.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.015.png)
 
 <a name="_page22_x70.87_y401.98"></a>Figure 4.5: Sample Discussion with GPT Agent, reviews
 
@@ -550,7 +514,7 @@ language processing (NLP) capabilities. It offers a suite of tools that can anal
 3. Implementation<a name="_page24_x70.87_y571.11"></a> details
 - Sentiment Analysis : The cloud function sends collected reviews to the Azure Text Analytics API, which analyzes the sentiment of each review.
 
-  ![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.016.png)
+  ![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.016.png)
 
 <a name="_page25_x70.87_y94.21"></a>Figure 4.6: Sample Text Analytics output
 
@@ -563,7 +527,7 @@ column contains the result returned by the sentiment analyser.
 
 
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.017.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.017.png)
 
 <a name="_page25_x69.87_y18.83"></a><a name="_page26_x70.87_y94.21"></a>Figure 4.7: Data/in (blue) Data/out (purple), in KB
 
@@ -573,13 +537,13 @@ function with the final, processed response size in KB.
 
 - CI/CD : The cloud function instance on Azure is linked to a Github repository that contains the function’s code. When a new commit occurs on the main branch of that repository, a Github action is triggered to automatically build and deploy the new version of the code.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.018.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.018.png)
 
 <a name="_page26_x70.87_y505.23"></a>Figure 4.8: CI/CD pipeline steps
 
 Figure 4.9 shows the various steps of our CI/CD pipeline, which consists in copying the code, setting up the python environment and installing dependencies, deploying the     function to Azure, and finally cleaning up the job.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.019.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.019.png)
 
 <a name="_page27_x70.87_y94.21"></a>Figure 4.9: CI/CD pipelines executions
 
@@ -613,13 +577,13 @@ Security and Compliance : Azure Table Storage ensures data security with robust 
 
 We’ve created a storage account to which we linked an Azure Table Storage entity. The cloud function uses it to flexibly store the pre-processed reviews. The current schema of the table, which can flexibily change if we decide to add fields to our data to enrich it further, is depicted in the figure below:
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.020.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.020.png)
 
 <a name="_page28_x70.87_y290.01"></a>Figure 4.10: Table Schema
 
 Figure 4.10 shows the structure of our Azure Table Storage. The Author\_type reflects whether the user is a human or a bot. Author\_association informs us about whether the author is a maintainer of the project or not. Finally, and most importantly, the    content column contains the comment itself, the sentiment contains the output of the sentiment analyser, and the diff\_hunk column represents the code change related to that specific review.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.021.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.021.png)
 
 <a name="_page29_x70.87_y94.21"></a>Figure 4.11: Sample Data, part 1
 
@@ -627,7 +591,7 @@ Figure 4.11 shows a projection of the Partition key, the row key, the timestamp,
 
 database.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.022.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.022.png)
 
 <a name="_page29_x70.87_y431.83"></a>Figure 4.12: Sample Data, part 2
 
@@ -667,7 +631,7 @@ To implement the data pipeline using Azure Synapse Analytics, the following step
 
 - Linked Services: Set up linked services in Azure Data Factory to connect to the SQL database and Azure Synapse Analytics.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.023.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.023.png)
 
 <a name="_page31_x70.87_y500.04"></a>Figure 4.13: List of the linked services
 
@@ -677,7 +641,7 @@ pipeline inside ADF.
 
 - Dataflows:<a name="_page32_x69.87_y18.83"></a> Created a dataflow pipeline to extract data from the SQL database, transform it to retain only the necessary columns (content, diff\_hunk, sentiment), and load it into Azure Synapse Analytics.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.024.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.024.png)
 
 <a name="_page32_x70.87_y160.79"></a>Figure 4.14: DataFlow Pipeline Architecture
 
@@ -687,7 +651,7 @@ Analytics SQL Pool ADF.
 
 - Transformation Logic: Applied transformation logic within the dataflows to con- vert sentiment values from strings to integers (positive: 1, neutral: 2, negative: 0) for better analysis and storage efficiency.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.025.jpeg)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.025.jpeg)
 
 <a name="_page32_x70.87_y566.37"></a>Figure 4.15: The Output of the transformation logic
 
@@ -712,7 +676,7 @@ Azure Databricks provides several compelling reasons for its adoption:
 
 In this part, we describe the steps taken to fine-tune the model using Azure Databricks.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.026.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.026.png)
 
 <a name="_page34_x70.87_y94.21"></a>Figure 4.16: Flowchart diagram of the implementation steps for model fine-tuning
 
@@ -724,7 +688,7 @@ Data<a name="_page35_x69.87_y18.83"></a> Ingestion :
 
 Data was ingested into the Azure Databricks environment from Azure Synapse Analytics. This data included new pull request data, such as code changes, review comments, and sentiment analysis results.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.027.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.027.png)
 
 <a name="_page35_x70.87_y166.77"></a>Figure 4.17: Example of ingested data including.
 
@@ -747,7 +711,7 @@ Scheduled Retraining :
 
 To ensure that our model remains up-to-date and effectively captures evolving trends and patterns in the data, I implemented a scheduled retraining process. A job is scheduled to run every day at midnight using Databricks workflows. This automated process trig- gers the model training pipeline, allowing it to ingest new data and fine-tune the model accordingly.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.028.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.028.png)
 
 <a name="_page36_x70.87_y494.51"></a>Figure 4.18: Scheduled retraining job in Databricks workflow.
 
@@ -775,7 +739,7 @@ MLFlow [11] is an open-source platform designed to manage the machine learning l
 
 Our project extensively utilized MLflow for managing the lifecycle of our machine learn- ing models. MLflow’s tracking functionality enabled us to systematically log and monitor the progress of model training runs. By leveraging MLflow’s user interface, we were able to visualize key metrics such as loss, perplexity, BLEU over the course of training. Addi- tionally, MLflow’s artifact logging feature allowed us to store the trained model artifacts alongside their associated metadata, including hyperparameters and performance metrics.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.029.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.029.png)
 
 <a name="_page38_x70.87_y216.62"></a>Figure 4.19: MLflow dashboard showing tracked metrics
 
@@ -783,19 +747,19 @@ Figure 4.19 is a screenshot of the MLflow dashboard, showcasing a comprehensive 
 
 Furthermore, MLflow’s model registry provided a centralized repository for storing and versioning our trained models. This enabled us to easily compare different model versions, track improvements over time, and select the best-performing model for deployment. The ability to visualize and compare models directly within MLflow streamlined our decision- making process and facilitated collaboration among team members.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.030.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.030.png)
 
 <a name="_page38_x70.87_y626.36"></a>Figure 4.20: MLflow dashboard showcasing different stored model versions.
 
 Figure 4.20 is a screenshot from the MLflow dashboard, displaying a comprehensive overview of tracked metrics and different versions of the model. The dashboard includes detailed metrics such as evaluation loss, perplexity, and other performance indicators for each version. This visualization aids in monitoring the progress of various model iterations and facilitates effective version control and comparison.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.031.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.031.png)
 
 <a name="_page39_x70.87_y180.64"></a>Figure 4.21: A bar chart showing the perplexity scores for various model versions.
 
 Figure 4.21 is a bar chart depicting the perplexity scores for various model training runs. Perplexity, a common metric in language modeling, indicates how well the model predicts a sample. Lower perplexity signifies better performance. The chart, generated using MLflow’s tracking interface, highlights significant differences in perplexity among the models. Notably, one model (’bustling-croc-892’) has a substantially higher perplex- ity, indicating poor performance compared to others. This visualization aids in quickly identifying underperforming models and guiding further optimization efforts.
 
-![](Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.032.png)
+![](images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.032.png)
 
 <a name="_page39_x70.87_y517.65"></a>Figure 4.22: The evaluation loss for various model training runs over a series of steps.
 
@@ -828,10 +792,7 @@ Scheduled retraining in Databricks ensured the model stayed current with new dat
 
 In summary, our implementation leverages Azure and MLflow to create a robust, scal- able, and efficient machine-learning pipeline.
 
-42
-![ref1] 45 Challenges and Limitations![ref2]
-
-5  Challenges<a name="_page42_x69.87_y18.83"></a><a name="_page42_x70.87_y101.43"></a> and Limitations
+## 5. [Challenges and Limitations](#challenges-and-limitations)
 
 This project aimed to develop a robust, scalable, and efficient data pipeline for process- ing and analyzing code review data from GitHub. Despite the successful implementation, we encountered several technical challenges and limitations that required careful consid- eration and innovative solutions. This section outlines the primary technical challenges faced, limitations of the current solution, and potential future work and improvements to address these issues.
 
@@ -903,8 +864,7 @@ Conclusion:
 
 By addressing these specific challenges and limitations, and focusing on future improve- ments, the project can evolve into a more robust, scalable, and user-friendly solution for automated code reviews. This approach ensures the system not only meets current needs but is also prepared to handle future demands and complexities.
 
-45
-![ref1] 46 Conclusion![ref2]
+## 6. [Conclusion](#6-conclusion)
 
 6  Conclusion
 1. <a name="_page45_x69.87_y18.83"></a><a name="_page45_x70.87_y101.43"></a>Summary<a name="_page45_x70.87_y125.22"></a> of Findings
@@ -928,9 +888,8 @@ These outcomes highlight the potential for AI to significantly improve code revi
 The integration of AI into code review processes marks a significant advancement in soft- ware development practices. By leveraging AI, we can reduce the manual effort involved in code reviews, identify issues more accurately, and provide developers with valuable in- sights. Our project serves as a proof of concept that demonstrates the potential benefits and sets the stage for future improvements and scalability. Continued development and refinement, along with user feedback, will be crucial in fully realizing the potential of AI in this domain. We are optimistic about the future possibilities and the impact this project can have on the software development community.
 
 46
-![ref1] References![ref2]
 
-<a name="_page46_x70.87_y91.47"></a>Bibliography References
+## [7. Bibliography](#7-bibliography)
 
 1. Amazon.<a name="_page46_x70.87_y158.98"></a> Data Lake. Accessed: 2024-06-05. 2024. url :[ https://aws.amazon.com/ what-is/data-lake/ .](https://aws.amazon.com/what-is/data-lake/)
 1. Microsoft.<a name="_page46_x70.87_y194.64"></a> Data Warehouse . Accessed: 2024-06-05. 2024. url : [https://azure. microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-a- data-warehouse .](https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-a-data-warehouse)
@@ -949,5 +908,6 @@ The integration of AI into code review processes marks a significant advancement
 1. Microsoft.Azure<a name="_page46_x70.87_y625.89"></a> Monitoring Documentation . Accessed: 2024-06-05. 2024.url :[ https: //docs.microsoft.com/en-us/azure/azure-monitor/ .](https://docs.microsoft.com/en-us/azure/azure-monitor/)
 47
 
-[ref1]: Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.005.png
-[ref2]: Images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.006.png
+[ref1]: images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.005.png
+[ref2]: images/Aspose.Words.f4dae160-79fc-4b28-845f-4c57651ebb6e.006.png
+"
